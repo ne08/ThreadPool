@@ -9,6 +9,14 @@
 
 
 class ThreadPool{
+
+    private:
+        std::vector<std::thread> workers;
+        std::queue<std::function<void()>> tasks;
+        std::mutex queue_mutex;
+        std::condition_variable cv;
+        bool stop;
+
     public:
         ThreadPool(size_t num_threads) : stop(false) {
             for(size_t i = 0; i<num_threads; i++ ){
@@ -58,10 +66,5 @@ class ThreadPool{
             }
         }
 
-        std::vector<std::thread> workers;
-        std::queue<std::function<void()>> tasks;
-        std::mutex queue_mutex;
-        std::condition_variable cv;
-        bool stop;
-
+      
 };
